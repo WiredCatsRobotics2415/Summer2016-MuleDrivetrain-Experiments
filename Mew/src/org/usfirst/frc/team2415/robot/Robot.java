@@ -31,6 +31,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	
+    	gamepad = new WiredCatGamepad(0);
+    	joystick = new WiredCatJoystick(1);
 		
     	driveSubsystem = new DriveSubsystem();
     	

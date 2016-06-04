@@ -33,7 +33,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void setMotors(double left, double right){
-    	leftTalon.set(left);
+    	leftTalon.set(-left);
     	rightTalon.set(right);
     }
     
