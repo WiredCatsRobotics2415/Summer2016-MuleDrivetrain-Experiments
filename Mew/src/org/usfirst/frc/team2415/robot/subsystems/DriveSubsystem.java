@@ -42,7 +42,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getEncoders(){
-    	return new double[]{leftEncoder.get(), -rightEncoder.get()};
+    	return new double[]{-leftEncoder.get(), -rightEncoder.get()};
     }
     
     public void resetEncoders(){

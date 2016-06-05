@@ -37,6 +37,8 @@ public class Robot extends IterativeRobot {
 		
     	driveSubsystem = new DriveSubsystem();
     	
+    	driveSubsystem.resetEncoders();
+    	
     }
 	
 	/**
@@ -50,6 +52,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
