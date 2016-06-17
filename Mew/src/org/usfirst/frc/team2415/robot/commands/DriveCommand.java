@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveCommand extends Command {
+	
+	double leftVal, rightVal;
 
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -16,6 +18,16 @@ public class DriveCommand extends Command {
     	requires(Robot.driveSubsystem);
     	
     }
+    
+    public DriveCommand(double leftVal, double rightVal) {
+    	
+    	requires(Robot.driveSubsystem);
+    	
+    		this.leftVal = leftVal;
+    		this.rightVal = rightVal;
+    
+    }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -24,7 +36,11 @@ public class DriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
+    	if(Robot.driveSubsystem.talonMode == 0){
+    		Robot.driveSubsystem.setMotors(Robot.gamepad.leftY(), Robot.gamepad.rightY());
+    	} else {
+    		Robot.driveSubsystem.setMotors(leftVal, rightVal);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

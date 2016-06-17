@@ -1,14 +1,12 @@
 
 package org.usfirst.frc.team2415.robot;
 
+import org.usfirst.frc.team2415.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2415.robot.commands.*;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team2415.robot.commands.*;
-import org.usfirst.frc.team2415.robot.subsystems.*;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,6 +36,9 @@ public class Robot extends IterativeRobot {
     	driveSubsystem = new DriveSubsystem();
     	
     	driveSubsystem.resetEncoders();
+    	
+    	
+    	gamepad.a_button.whileHeld(new DriveCommand(300,-300));
     	
     }
 	
