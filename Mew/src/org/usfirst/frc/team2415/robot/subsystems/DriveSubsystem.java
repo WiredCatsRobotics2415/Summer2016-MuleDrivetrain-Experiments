@@ -57,11 +57,15 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getUltrasonic(){
+    	ultrasonic.ping();
     	return ultrasonic.getRangeInches();
     }
     
     public void updateStatus(){
+    	SmartDashboard.putBoolean("Ultrasonic working?", ultrasonic.isRangeValid());
     	SmartDashboard.putNumber("Ultrasonic", getUltrasonic());
+    	SmartDashboard.putNumber("Left Encoder", getEncoders()[0]);
+    	SmartDashboard.putNumber("Right Encoder", getEncoders()[1]);
     }
     
 }
