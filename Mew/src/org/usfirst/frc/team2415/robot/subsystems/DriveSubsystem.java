@@ -4,8 +4,11 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 import org.usfirst.frc.team2415.robot.commands.DriveCommand;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -17,13 +20,16 @@ public class DriveSubsystem extends Subsystem {
 	
 	private CANTalon leftTalon, rightTalon;
 	private Encoder leftEncoder, rightEncoder;
+	private Ultrasonic ultrasonic;
 	
-	public DriveSubsystem(){
+	public DriveSubsystem() {
 		leftTalon = new CANTalon(RobotMap.LEFT_TALON);
 		rightTalon = new CANTalon(RobotMap.RIGHT_TALON);
 		
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0], RobotMap.LEFT_ENCODER[1]);
 		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0], RobotMap.RIGHT_ENCODER[1]);
+		
+		ultrasonic = new Ultrasonic(RobotMap.ULTRA_PING, RobotMap.ULTRA_ECHO);
 	}
 
     public void initDefaultCommand() {
@@ -48,6 +54,14 @@ public class DriveSubsystem extends Subsystem {
     public void resetEncoders(){
     	leftEncoder.reset();
     	rightEncoder.reset();
+    }
+    
+    public double getUltrasonic(){
+    	return ultrasonic.getRangeInches();
+    }
+    
+    public void updateStatus(){
+    	SmartDashboard.putNumber("Ultrasonic", getUltrasonic());
     }
     
 }

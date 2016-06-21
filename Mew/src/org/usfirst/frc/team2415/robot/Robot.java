@@ -52,6 +52,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		updateStatus();
 		
 	}
 
@@ -93,5 +94,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    public void updateStatus(){
+    	driveSubsystem.updateStatus();
     }
 }
