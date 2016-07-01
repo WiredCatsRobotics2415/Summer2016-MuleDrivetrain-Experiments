@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -34,10 +35,18 @@ public class DriveSubsystem extends Subsystem {
 			leftTalon.changeControlMode(TalonControlMode.Position);
 			leftTalon.reverseOutput(true);
 			leftTalon.set(0);
-			leftTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			leftTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+			leftTalon.setProfile(0);
+			leftTalon.setPID(0.1, 0, 0);
+			leftTalon.enable();
+			leftTalon.clearStickyFaults();
 			rightTalon.changeControlMode(TalonControlMode.Position);
 			rightTalon.set(0);
-			rightTalon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+			rightTalon.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+			rightTalon.setProfile(0);
+			rightTalon.setPID(0.1, 0, 0);
+			rightTalon.enable();
+			rightTalon.clearStickyFaults();
 			
 		} else { //throttle mode
 			
@@ -72,5 +81,13 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.reset();
     }
     
+    public void updateStatus(){
+    	SmartDashboard.putNumber("Mag Encoder Position", leftTalon.getEncPosition());
+    	SmartDashboard.putNumber("Mag Encoder Setpoint", leftTalon.getSetpoint());
+    	SmartDashboard.putNumber("Talon Position", leftTalon.get());
+    	SmartDashboard.putNumber("Talon Error", leftTalon.getError());
+    	SmartDashboard.putNumber("Talon PID Get", leftTalon.pidGet());
+    	SmartDashboard.putNumber("Talon P", leftTalon.getP());
+    }
 }
 

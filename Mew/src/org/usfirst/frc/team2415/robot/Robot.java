@@ -38,7 +38,9 @@ public class Robot extends IterativeRobot {
     	driveSubsystem.resetEncoders();
     	
     	
-    	gamepad.a_button.whileHeld(new DriveCommand(300,-300));
+    	gamepad.x_button.whenPressed(new DriveCommand(0,0));
+    	gamepad.a_button.whenPressed(new DriveCommand(5, 0));
+    	gamepad.b_button.whenPressed(new DriveCommand(-5, 0));
     	
     }
 	
@@ -53,6 +55,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		updateStatus();
 		
 	}
 
@@ -87,6 +90,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateStatus();
     }
     
     /**
@@ -94,5 +98,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    public void updateStatus(){
+    	driveSubsystem.updateStatus();
     }
 }
