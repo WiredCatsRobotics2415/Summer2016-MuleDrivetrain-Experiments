@@ -23,5 +23,5 @@ public class RobotMap {
 	public static final int[] RIGHT_ENCODER = {2,3};
 	
 	public static final int ULTRA_PING = 5;
-	public static final int ULTRA_ECHO = 4;
+	public static final int ULTRA_ECHO = 6;
 }

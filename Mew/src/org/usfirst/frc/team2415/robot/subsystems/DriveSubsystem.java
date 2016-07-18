@@ -30,6 +30,7 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0], RobotMap.RIGHT_ENCODER[1]);
 		
 		ultrasonic = new Ultrasonic(RobotMap.ULTRA_PING, RobotMap.ULTRA_ECHO);
+		ultrasonic.setAutomaticMode(true);
 	}
 
     public void initDefaultCommand() {
@@ -57,15 +58,13 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double getUltrasonic(){
-    	ultrasonic.ping();
+    	System.out.println(ultrasonic.getRangeInches());
     	return ultrasonic.getRangeInches();
     }
     
     public void updateStatus(){
     	SmartDashboard.putBoolean("Ultrasonic working?", ultrasonic.isRangeValid());
     	SmartDashboard.putNumber("Ultrasonic", getUltrasonic());
-    	SmartDashboard.putNumber("Left Encoder", getEncoders()[0]);
-    	SmartDashboard.putNumber("Right Encoder", getEncoders()[1]);
     }
     
 }
