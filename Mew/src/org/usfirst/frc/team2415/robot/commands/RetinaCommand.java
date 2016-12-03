@@ -22,11 +22,11 @@ public class RetinaCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (!(Math.abs(Robot.retinaSubsystem.camVoltage() - Robot.retinaSubsystem.goal) < .2)) {
-    		if(Robot.retinaSubsystem.camVoltage() < Robot.retinaSubsystem.goal) {
+    	if (!(Math.abs(Robot.retinaSubsystem.pixyCam.getError()) < .2) && Robot.retinaSubsystem.pixyCam.getTarget()) {
+    		if(Robot.retinaSubsystem.pixyCam.getError() < 0) {
     			Robot.driveSubsystem.setMotors(1, 0);
     		}
-    		if(Robot.retinaSubsystem.camVoltage() > Robot.retinaSubsystem.goal) {
+    		if(Robot.retinaSubsystem.pixyCam.getError() > 0) {
     			Robot.driveSubsystem.setMotors(0, 1);
     		}
     	}
