@@ -12,19 +12,32 @@ public class PixyCam {
 	
 	AnalogInput pixyAim;
 	DigitalInput pixyBool;
-	double goal = 1.6969;
+	double goal;
 	
 	/**
 	 * Constructor for the PixyCam object
-	 * 
+	 * TODO: set port values
 	 * @param AnalogPort the analog input port
 	 * @param DigitalPort the digital input port
-	 * @param goal the value that the pixy returns when it is perfectly lined up
 	 */
-	public PixyCam(int AnalogPort, int DigitalPort, double goal){
-		pixyAim = new AnalogInput(RobotMap.PIXY_PORT1);
-		pixyBool = new DigitalInput(RobotMap.PIXY_PORT2);
+	public PixyCam(int AnalogPort, int DigitalPort){
+		pixyAim = new AnalogInput(0);
+		pixyBool = new DigitalInput(0);
+	}
+	
+	/**
+	* setter for the goal
+	*/
+	public void setGoal(double goal){
 		this.goal = goal;
+	}
+	
+	public double pixyPOut(double kP, double steadyState){
+		if (Math.abs(getError()) < steadyState){
+			return 0;
+		} else {
+		return getErrorPrime() * kP;
+		}
 	}
 	
 	/**
@@ -48,7 +61,7 @@ public class PixyCam {
 	 * @return the error if the target is in bounds, otherwise 0
 	 */
 	public double getErrorPrime(){
-		if (getTarget()) return get();
+		if (getTarget()) return getError();
 		else return 0;
 	}
 	
@@ -57,7 +70,7 @@ public class PixyCam {
 	 * @return current pixy position - target position
 	 */
 	public double getError(){
-		return get() - goal;
+		return goal - get();
 	}
 	
 

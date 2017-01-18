@@ -24,10 +24,10 @@ public class RetinaCommand extends Command {
     protected void execute() {
     	if (!(Math.abs(Robot.retinaSubsystem.pixyCam.getError()) < .2) && Robot.retinaSubsystem.pixyCam.getTarget()) {
     		if(Robot.retinaSubsystem.pixyCam.getError() < 0) {
-    			Robot.driveSubsystem.setMotors(1, 0);
+    			Robot.driveSubsystem.setMotors(1, -1);
     		}
     		if(Robot.retinaSubsystem.pixyCam.getError() > 0) {
-    			Robot.driveSubsystem.setMotors(0, 1);
+    			Robot.driveSubsystem.setMotors(-1, 1);
     		}
     	}
     	

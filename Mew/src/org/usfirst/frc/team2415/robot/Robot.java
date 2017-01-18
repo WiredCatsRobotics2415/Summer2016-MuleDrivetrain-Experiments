@@ -19,11 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+
+	public static WiredCatGamepad gamepad;
+	public static WiredCatJoystick joystick;
+	
 	public static DriveSubsystem driveSubsystem;
 	public static RetinaSubsystem retinaSubsystem;
 	
-	public static WiredCatGamepad gamepad;
-	public static WiredCatJoystick joystick;
 	
 
 
@@ -39,7 +41,6 @@ public class Robot extends IterativeRobot {
     	driveSubsystem = new DriveSubsystem();
     	retinaSubsystem = new RetinaSubsystem();
     	
-    	driveSubsystem.resetEncoders();
     	
     }
 	

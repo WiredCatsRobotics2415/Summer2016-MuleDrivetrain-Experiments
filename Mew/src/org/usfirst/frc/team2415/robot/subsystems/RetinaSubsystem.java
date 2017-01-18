@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.PixyCam;
+import org.usfirst.frc.team2415.robot.RobotMap;
 import org.usfirst.frc.team2415.robot.commands.RetinaCommand;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +23,7 @@ public class RetinaSubsystem extends Subsystem {
     }
     
 	public RetinaSubsystem(){
-    	pixyCam = new PixyCam(0,1,1.6969);
+    	pixyCam = new PixyCam(RobotMap.PIXY_PORT1,RobotMap.PIXY_PORT2);
 	}
     
     public void updateStatus(){
