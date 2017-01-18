@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static DriveSubsystem driveSubsystem;
 	public static RetinaSubsystem retinaSubsystem;
 	
+	public static Command autoCommand;
 	
 
 
@@ -68,6 +69,10 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	
+    	autoCommand = new PixyBangCommand();
+    	autoCommand.start();
+    	
     }
 
     /**
