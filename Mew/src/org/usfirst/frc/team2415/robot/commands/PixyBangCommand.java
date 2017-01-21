@@ -27,20 +27,21 @@ public class PixyBangCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		System.out.println("CIM: " + kP*Robot.retinaSubsystem.pixyCam.getErrorPrime());
-    	if(Math.abs(Robot.retinaSubsystem.pixyCam.getErrorPrime()) >= 0.1){
-        	Robot.driveSubsystem.setMotors(-kP*Robot.retinaSubsystem.pixyCam.getErrorPrime(), kP*Robot.retinaSubsystem.pixyCam.getErrorPrime());
-    	}
-//    	finisher = (Math.abs(Robot.retinaSubsystem.pixyCam.getErrorPrime()) <= 0.3);
-//    	if (finisher == false) startTime = System.currentTimeMillis();
-//    	System.out.println("Raw: " + Robot.retinaSubsystem.pixy.getVoltage() + "\t<1: " + Robot.retinaSubsystem.pixy.getVoltage()*0.25);
-//    	Robot.driveSubsystem.setMotors(Robot.retinaSubsystem.pixy.getVoltage()*0.25, Robot.retinaSubsystem.pixy.getVoltage()*0.25);
+    	double speed = Robot.retinaSubsystem.pixyCam.POut(0.75, 0.1);
+		System.out.println("CIM: " + speed + "\t finisher: " + (System.currentTimeMillis() - startTime));
+        Robot.driveSubsystem.setMotors(-speed, speed);
+        
+    	finisher = (Math.abs(Robot.retinaSubsystem.pixyCam.getErrorPrime()) <= 0.3);
+    	if (finisher == false) startTime = System.currentTimeMillis();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return System.currentTimeMillis() - startTime >= 3;
-    	return false;
+        if(System.currentTimeMillis() - startTime >= 3){
+        	System.out.println("DONE");
+        	return true;
+        } else return false;
     }
 
     // Called once after isFinished returns true

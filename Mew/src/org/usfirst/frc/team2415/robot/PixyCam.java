@@ -32,7 +32,7 @@ public class PixyCam {
 		this.goal = goal;
 	}
 	
-	public double pixyPOut(double kP, double steadyState){
+	public double POut(double kP, double steadyState){
 		if (Math.abs(getError()) < steadyState){
 			return 0;
 		} else {
