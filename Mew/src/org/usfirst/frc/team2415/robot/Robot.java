@@ -54,6 +54,8 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
+		System.out.println("Target: " + retinaSubsystem.pixyCam.getTarget() + "\t Pixy: " + retinaSubsystem.pixyCam.getErrorPrime());
+//        System.out.println("Raw: " + Robot.retinaSubsystem.pixy.getVoltage());
 		Scheduler.getInstance().run();
 		
 	}
