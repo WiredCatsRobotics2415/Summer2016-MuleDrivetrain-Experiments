@@ -2,13 +2,15 @@ package org.usfirst.frc.team2415.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
  * A class for the PixyCam
  * @author omarimatthews
  *
  */
-public class PixyCam {
+public class PixyCam implements PIDSource {
 	
 	AnalogInput pixyAim;
 	DigitalInput pixyBool;
@@ -56,13 +58,16 @@ public class PixyCam {
 		return pixyAim.getVoltage();
 	}
 	
+	public double getPrime(){
+		return getTarget() ? get() : 0;
+	}
+	
 	/**
 	 * basically only do vision if you can see the target
 	 * @return the error if the target is in bounds, otherwise 0
 	 */
 	public double getErrorPrime(){
-		if (getTarget()) return getError();
-		else return 0;
+		return getTarget() ? getError() : 0;
 	}
 	
 	/**
@@ -71,6 +76,22 @@ public class PixyCam {
 	 */
 	public double getError(){
 		return goal - get();
+	}
+
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		return PIDSourceType.kDisplacement;
+	}
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return get();
 	}
 	
 
