@@ -53,6 +53,10 @@ public class DriveSubsystem extends Subsystem {
     	return new double[]{-leftEncoder.get(), -rightEncoder.get()};
     }
     
+    public Encoder[] returnEncoders(){
+    	return new Encoder[]{leftEncoder, rightEncoder};
+    }
+    
     public void resetEncoders(){
     	leftEncoder.reset();
     	rightEncoder.reset();

@@ -15,11 +15,11 @@ public class PixyBangCommand extends Command implements PIDOutput {
 	boolean finisher;
 	long startTime;
 	double rotation;
-	double kP = 1.125, 
+	double kP = 0.969, 
 		   kI = 0, 
 		   kD = 0.5, 
 		   kF = 0,
-		   kTolerance = .023;
+		   kTolerance = .1;
 	
 	PIDController turnController;
 	
@@ -45,9 +45,10 @@ public class PixyBangCommand extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	double speed = Robot.retinaSubsystem.pixyCam.getTarget() ? rotation : 0;
-		System.out.println("CIM: " + speed + "\tleft_E: " + Robot.driveSubsystem.getEncoders()[0] + "\tright_E: " + Robot.driveSubsystem.getEncoders()[1]);
-        Robot.driveSubsystem.setMotors(-speed, speed);
+    	double angle = Robot.retinaSubsystem.pixyCam.getTarget() ? rotation : 0;
+    	double straight = Robot.retinaSubsystem.pixyCam.getTarget() ? .5 - .3*Math.abs(angle) : 0;
+		System.out.println("CIM: " + angle + "\tleft_E: " + Robot.driveSubsystem.getEncoders()[0] + "\tright_E: " + Robot.driveSubsystem.getEncoders()[1]);
+        Robot.driveSubsystem.setMotors(-angle - straight,angle - straight);
     	
     }
 
