@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2415.robot;
 
+import java.util.LinkedList;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDSource;
@@ -15,6 +17,11 @@ public class PixyCam implements PIDSource {
 	AnalogInput pixyAim;
 	DigitalInput pixyBool;
 	double goal;
+	int kSampleSize = 25;
+	double kTolerance = 0.5;
+	static double prev;
+	double coeff = 0.5;
+	boolean test = true;
 	
 	/**
 	 * Constructor for the PixyCam object
@@ -58,6 +65,11 @@ public class PixyCam implements PIDSource {
 		return pixyAim.getVoltage();
 	}
 	
+	public double getFiltered(){
+		prev = coeff*get() + (1 - coeff)*prev;
+		return prev;
+	}
+	
 	public double getPrime(){
 		return getTarget() ? get() : 0;
 	}
@@ -91,7 +103,12 @@ public class PixyCam implements PIDSource {
 	@Override
 	public double pidGet() {
 		// TODO Auto-generated method stub
-		return get();
+		if(Math.abs(getError()) <= kTolerance) {
+			return getFiltered();
+		} else {
+			prev = get();
+			return get();
+		}
 	}
 	
 
