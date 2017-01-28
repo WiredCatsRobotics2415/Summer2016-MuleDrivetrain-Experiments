@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2415.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -24,10 +25,9 @@ public class Robot extends IterativeRobot {
 	public static WiredCatJoystick joystick;
 	
 	public static DriveSubsystem driveSubsystem;
-	public static RetinaSubsystem retinaSubsystem;
 	
-	
-
+	public static Preferences prefs;
+	public static double angle;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -39,8 +39,9 @@ public class Robot extends IterativeRobot {
     	joystick = new WiredCatJoystick(1);
 		
     	driveSubsystem = new DriveSubsystem();
-    	retinaSubsystem = new RetinaSubsystem();
-    	
+
+		prefs = Preferences.getInstance();
+		angle = prefs.getDouble("TurnAngle", 0);
     	
     }
 	
@@ -54,8 +55,8 @@ public class Robot extends IterativeRobot {
     }
 	
 	public void disabledPeriodic() {
-		System.out.println("Target: " + retinaSubsystem.pixyCam.getTarget() + "\t Pixy: " + retinaSubsystem.pixyCam.getErrorPrime());
-//        System.out.println("Raw: " + Robot.retinaSubsystem.pixy.getVoltage());
+
+    	System.out.println("Disabled Yaw: " + Robot.driveSubsystem.ahrs.getYaw());
 		Scheduler.getInstance().run();
 		
 	}
@@ -91,6 +92,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	prefs = Preferences.getInstance();
         Scheduler.getInstance().run();
     }
     
@@ -102,6 +104,5 @@ public class Robot extends IterativeRobot {
     }
     
     public void updateStatus() {
-    	retinaSubsystem.updateStatus();
     }
 }
