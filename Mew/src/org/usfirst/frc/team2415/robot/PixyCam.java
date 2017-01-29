@@ -22,7 +22,10 @@ public class PixyCam implements PIDSource {
 	static double prev;
 	double coeff = 0.5;
 	boolean test = true;
-	
+	double maxErr = 1; //this is some made up value. adjust as needed
+	double error = 0;
+	double prevError = 0;
+	double prev1;
 	/**
 	 * Constructor for the PixyCam object
 	 * TODO: set port values
@@ -65,6 +68,11 @@ public class PixyCam implements PIDSource {
 		return pixyAim.getVoltage();
 	}
 	
+	public double getRavi(){
+		prev1 =  Math.abs(prev1-get()) > maxErr ? prev1 : get();
+		return prev1;
+	}
+	
 	public double getFiltered(){
 		prev = coeff*get() + (1 - coeff)*prev;
 		return prev;
@@ -86,10 +94,12 @@ public class PixyCam implements PIDSource {
 	 * finds the offset of the pixy from it's target
 	 * @return current pixy position - target position
 	 */
-	public double getError(){
-		return goal - get();
+	public double getError(){		
+		error =  Math.abs(goal - get()) > maxErr ? prevError : (goal - get());
+		prevError = error;
+		return error;
 	}
-
+	
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		// TODO Auto-generated method stub
