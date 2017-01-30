@@ -35,7 +35,7 @@ public class DriveToCommand extends Command implements PIDOutput {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.setMotors(0, 0);
-    	encoderController.setSetpoint(distance*4096);
+    	encoderController.setSetpoint(distance*4096*0.1875);
     	encoderController.enable();
     }
 

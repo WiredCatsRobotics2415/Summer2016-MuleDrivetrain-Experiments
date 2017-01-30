@@ -2,9 +2,9 @@ package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class ArcadeDriveCommand {
+public class ArcadeDriveCommand extends Command{
 
 	public ArcadeDriveCommand(){
 		requires(Robot.driveSubsystem);

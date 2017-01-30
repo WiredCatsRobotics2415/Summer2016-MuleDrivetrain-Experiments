@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class PixyBangCommand extends Command implements PIDOutput {
 
-	
+	long startTime;
+	boolean finisher;
+	double finisherTime;
 
 	double rotation;
 	double kP = 0.25, 
@@ -48,6 +50,8 @@ public class PixyBangCommand extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
+    	startTime = System.currentTimeMillis();
+    	finisher = false;
     	double angle = Robot.retinaSubsystem.pixyCam.getTarget() ? rotation : 0;
     	double straight = Robot.retinaSubsystem.pixyCam.getTarget() && Robot.joystick.buttons[1].get() ? .5 - .3*Math.abs(angle) : 0;
     	
@@ -57,13 +61,19 @@ public class PixyBangCommand extends Command implements PIDOutput {
         Robot.driveSubsystem.setMotors(-angle + straight,angle + straight);
 		else 
 		Robot.driveSubsystem.setMotors(-angle - straight,angle - straight);
+		finisher = angle <= kTolerance;
+		if (finisher == false) {
+    		finisherTime = 0;
+    		startTime = System.currentTimeMillis();	
+    	}
+		finisherTime = (System.currentTimeMillis() - startTime)/1000.0;
 
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
+    	return finisherTime >= 3;
     }
 
     // Called once after isFinished returns true
