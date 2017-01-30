@@ -14,7 +14,7 @@ public class DriveToCommand extends Command implements PIDOutput {
 	double distance;
 	double speed;
 	PIDController encoderController;
-	double kP = 1.125, 
+	double kP = 0.1, 
 		   kI = 0, 
 		   kD = 0, 
 		   kF = 0,
