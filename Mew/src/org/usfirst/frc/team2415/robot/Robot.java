@@ -43,6 +43,11 @@ public class Robot extends IterativeRobot {
     	
     	
     	gamepad.leftBumper.whenPressed(new PixyBangCommand());
+    	gamepad.y_button.whenPressed(new TurnToCommand(0));
+    	gamepad.x_button.whenPressed(new TurnToCommand(-90));
+    	gamepad.a_button.whenPressed(new TurnToCommand(180));
+    	gamepad.b_button.whenPressed(new TurnToCommand (90));
+    	
     	
     }
 	

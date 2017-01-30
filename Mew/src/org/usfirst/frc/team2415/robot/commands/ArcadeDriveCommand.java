@@ -2,9 +2,10 @@ package org.usfirst.frc.team2415.robot.commands;
 
 import org.usfirst.frc.team2415.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ArcadeDriveCommand {
+public class ArcadeDriveCommand extends Command{
 
 	public ArcadeDriveCommand(){
 		requires(Robot.driveSubsystem);
@@ -32,5 +33,11 @@ public class ArcadeDriveCommand {
 	}
 	protected void interrupted(){
 		Robot.driveSubsystem.setMotors(0, 0);
+	}
+
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		
 	}
 }
