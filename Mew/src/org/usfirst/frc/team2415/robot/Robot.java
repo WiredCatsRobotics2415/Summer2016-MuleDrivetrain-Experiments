@@ -42,6 +42,8 @@ public class Robot extends IterativeRobot {
     	retinaSubsystem = new RetinaSubsystem();
     	
     	
+    	gamepad.leftBumper.whenPressed(new PixyBangCommand());
+    	
     }
 	
 	/**
@@ -51,6 +53,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit(){
 
+    	
     }
 	
 	public void disabledPeriodic() {

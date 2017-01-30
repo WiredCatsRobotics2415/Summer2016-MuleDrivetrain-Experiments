@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class PixyBangCommand extends Command implements PIDOutput {
 
-	boolean finisher;
-	long startTime;
+	
+
 	double rotation;
 	double kP = 0.25, 
 		   kI = 0.025, 
@@ -24,10 +24,12 @@ public class PixyBangCommand extends Command implements PIDOutput {
 	PIDController turnController;
 	
     public PixyBangCommand() {
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
     	requires(Robot.retinaSubsystem);
+    	
     	
     	turnController = new PIDController(kP, kI, kD, kF, Robot.retinaSubsystem.pixyCam, this);
     	turnController.setOutputRange(-1.0, 1.0);
@@ -48,9 +50,14 @@ public class PixyBangCommand extends Command implements PIDOutput {
     	
     	double angle = Robot.retinaSubsystem.pixyCam.getTarget() ? rotation : 0;
     	double straight = Robot.retinaSubsystem.pixyCam.getTarget() && Robot.joystick.buttons[1].get() ? .5 - .3*Math.abs(angle) : 0;
+    	
 //    	straight = Robot.retinaSubsystem.pixyCam.getTarget() && Robot.joystick.buttons[3].get() ? -.5 : straight;
 		System.out.println("CIM: " + angle);
-        Robot.driveSubsystem.setMotors(-angle - straight,angle - straight);
+		if (Robot.joystick.buttons[6].get())
+        Robot.driveSubsystem.setMotors(-angle + straight,angle + straight);
+		else 
+		Robot.driveSubsystem.setMotors(-angle - straight,angle - straight);
+
     	
     }
 

@@ -4,8 +4,10 @@ import org.usfirst.frc.team2415.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -18,6 +20,8 @@ public class DriveSubsystem extends Subsystem {
 	
 	private CANTalon leftTalon, rightTalon, leftSlave, rightSlave;
 	private Encoder leftEncoder, rightEncoder;
+	
+	public AHRS ahrs;
 	
 	public DriveSubsystem(){
 		leftTalon = new CANTalon(RobotMap.LEFT_TALON);
@@ -32,12 +36,13 @@ public class DriveSubsystem extends Subsystem {
 		
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER[0], RobotMap.LEFT_ENCODER[1]);
 		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER[0], RobotMap.RIGHT_ENCODER[1]);
+		
+		ahrs = new AHRS(SerialPort.Port.kMXP);
+		
 	}
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-//    	setDefaultCommand(new DriveCommand());
+      setDefaultCommand(new ArcadeDriveCommand());
     }
     
     public void setMotors(double left, double right){
