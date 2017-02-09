@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 /**
  *
  */
-public class PixyBangCommand extends Command implements PIDOutput {
+public class PixyBangTurnCommand extends Command implements PIDOutput {
 
 	
 
@@ -20,12 +20,10 @@ public class PixyBangCommand extends Command implements PIDOutput {
 		   kD = 0.075, 
 		   kF = 0,
 		   kTolerance = .2;
-	long startTime;
-	boolean finisher;
 	
 	PIDController turnController;
 	
-    public PixyBangCommand() {
+    public PixyBangTurnCommand() {
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -60,14 +58,12 @@ public class PixyBangCommand extends Command implements PIDOutput {
 		else 
 		Robot.driveSubsystem.setMotors(-angle - straight,angle - straight);
 
-		finisher = Math.abs(rotation) <= kTolerance;
-		if (!finisher) startTime = System.currentTimeMillis();
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return System.currentTimeMillis() - startTime >=3;
+    	return false;
     }
 
     // Called once after isFinished returns true

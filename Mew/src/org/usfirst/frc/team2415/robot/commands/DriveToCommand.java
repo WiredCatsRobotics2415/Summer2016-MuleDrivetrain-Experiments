@@ -14,7 +14,7 @@ public class DriveToCommand extends Command implements PIDOutput {
 	double distance;
 	double speed;
 	PIDController encoderController;
-	double kP = 1.125, 
+	double kP = .0125, 
 		   kI = 0, 
 		   kD = 0, 
 		   kF = 0,
@@ -34,14 +34,15 @@ public class DriveToCommand extends Command implements PIDOutput {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveSubsystem.resetEncoders();
     	Robot.driveSubsystem.setMotors(0, 0);
-    	encoderController.setSetpoint(distance*4096);
+    	encoderController.setSetpoint(distance*120);
     	encoderController.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("encoder position: " + Robot.driveSubsystem.getEncoders()[1]);
+    	System.out.println("encoder position: " + Robot.driveSubsystem.getEncoders()[1] + "\t setpoint: " + encoderController.getSetpoint());
     	Robot.driveSubsystem.setMotors(speed, speed);
     }
 

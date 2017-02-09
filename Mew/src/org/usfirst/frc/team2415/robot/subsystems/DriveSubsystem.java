@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2415.robot.subsystems;
 
 import org.usfirst.frc.team2415.robot.RobotMap;
+import org.usfirst.frc.team2415.robot.commands.ArcadeDriveCommand;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -55,7 +56,7 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public double[] getEncoders(){
-    	return new double[]{-leftEncoder.get(), -rightEncoder.get()};
+    	return new double[]{leftEncoder.get(), rightEncoder.get()};
     }
     
     public Encoder[] returnEncoders(){
@@ -67,5 +68,8 @@ public class DriveSubsystem extends Subsystem {
     	rightEncoder.reset();
     }
     
+    public void zeroYaw(){
+    	ahrs.zeroYaw();
+    }
 }
 

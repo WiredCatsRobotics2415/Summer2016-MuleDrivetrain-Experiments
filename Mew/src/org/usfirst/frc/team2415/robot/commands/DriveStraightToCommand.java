@@ -9,42 +9,39 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnToCommand extends Command implements PIDOutput {
+public class DriveStraightToCommand extends Command implements PIDOutput {
 
 
 	PIDController turnController;
 	double rotateToAngleRate;
 	double angle;
-	boolean finisher, checked = false;
-	long finisherTime, startTime;
 	
 	double kP = .025;
-	double kI = 0;
-	double kD = .02;
+	double kI = 0.0025;
+	double kD = .0;
 	double kF = 0;
 	
 	double kTolerance = 2.0;
 	
 	long zeroWaitTime;
 	
+	long startTime;
+	boolean finisher;
+	
+	double distance;
+	
 
 	
-	public TurnToCommand(double angle) {
+	public DriveStraightToCommand(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.driveSubsystem);
-		this.angle = angle;
-		startTime = System.currentTimeMillis();
+		this.distance = distance;
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	if(!checked){
-    		if((System.currentTimeMillis() - startTime) < 750) return;
-    		checked = true;
-    	}
-    	
-    	Robot.driveSubsystem.zeroYaw();
+    protected void initialize() {	
+    	Robot.driveSubsystem.resetEncoders();
     	Robot.driveSubsystem.setMotors(0, 0);
     	turnController = new PIDController(kP, kI, kD, kF, Robot.driveSubsystem.ahrs, this);
     	turnController.setInputRange(-180.0f,  180.0f);
@@ -52,21 +49,20 @@ public class TurnToCommand extends Command implements PIDOutput {
     	turnController.setAbsoluteTolerance(kTolerance);
     	turnController.setContinuous(true);
     	turnController.enable();
+    	turnController.setSetpoint(Robot.driveSubsystem.ahrs.getYaw());
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.joystick.buttons[1].get()) Robot.driveSubsystem.ahrs.zeroYaw();
-    	turnController.setSetpoint(angle);
     	System.out.println("Yaw: " + Robot.driveSubsystem.ahrs.getYaw() + "\tsetpoint: " + turnController.getSetpoint());
-    	Robot.driveSubsystem.setMotors(-rotateToAngleRate, rotateToAngleRate);
-    	finisher = (turnController.getError() <= kTolerance);
-    	if (finisher == false) finisherTime = System.currentTimeMillis();
+    	System.out.println("Encoder: " + Robot.driveSubsystem.getEncoders()[1] + "\tsetpoint: " + distance*120);
+    	Robot.driveSubsystem.setMotors(-rotateToAngleRate - .5, rotateToAngleRate - .5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return System.currentTimeMillis() - finisherTime >= 3;
+    	return distance*120 <= -Robot.driveSubsystem.getEncoders()[1];
     }
 
     // Called once after isFinished returns true

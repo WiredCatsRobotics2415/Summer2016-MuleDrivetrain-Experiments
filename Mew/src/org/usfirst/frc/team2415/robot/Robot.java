@@ -42,8 +42,13 @@ public class Robot extends IterativeRobot {
     	retinaSubsystem = new RetinaSubsystem();
     	
     	
-    	gamepad.leftBumper.whenPressed(new PixyBangCommand());
-    	
+    	joystick.buttons[2].whenPressed(new TurnToCommand(180));    	
+    	joystick.buttons[3].whenPressed(new TurnToCommand(0));    	
+    	joystick.buttons[4].whenPressed(new TurnToCommand(-90));    	
+    	joystick.buttons[5].whenPressed(new TurnToCommand(90));
+    	joystick.buttons[7].whileHeld(new DriveStraightCommand());
+    	joystick.buttons[8].whenPressed(new DriveStraightToCommand(10));
+    	joystick.buttons[9].whenPressed(new DriveBoxCommand());
     }
 	
 	/**
