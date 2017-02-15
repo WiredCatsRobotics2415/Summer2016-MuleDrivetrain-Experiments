@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2415.robot.commands;
+ package org.usfirst.frc.team2415.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,10 +15,10 @@ public class PlaceGearCommand extends CommandGroup {
 	double a1;
 	double fieldLength = 27;
 	double a2 = fieldLength-a1;
-	double baseLine = 7.8125;
+	double baseLine = 7.7708;
 	//baseLine-1 = 6.8125
-	double dHex;
-	double dLeft;
+	double dHex = 2.938;
+	double dLeft = 10.956;
 	double d2;
 	double dLift;
 	
